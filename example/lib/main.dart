@@ -239,6 +239,7 @@ class _SecondPageState extends State<SecondPage> {
       itemSorter: (a, b) => a.stars == b.stars ? 0 : a.stars > b.stars ? -1 : 1,
       itemFilter: (suggestion, input) =>
           suggestion.name.toLowerCase().startsWith(input.toLowerCase()),
+      expandDropdownByDefault: true,
     );
   }
 

@@ -33,6 +33,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final TextEditingController controller;
   final FocusNode focusNode;
+  final bool expandDropdownByDefault;
 
   AutoCompleteTextField(
       {@required
@@ -63,7 +64,9 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.textCapitalization: TextCapitalization.sentences,
       this.minLength = 1,
       this.controller,
-      this.focusNode})
+      this.focusNode,
+      this.expandDropdownByDefault = false
+      })
       : super(key: key);
 
   void clear() => key.currentState.clear();
@@ -112,7 +115,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       keyboardType,
       textInputAction,
       controller,
-      focusNode);
+      focusNode,
+      expandDropdownByDefault);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -133,6 +137,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   bool submitOnSuggestionTap, clearOnSubmit;
   TextEditingController controller;
   FocusNode focusNode;
+  bool expandDropDownByDefault;
 
   String currentText = "";
 
@@ -163,7 +168,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.keyboardType,
       this.textInputAction,
       this.controller,
-      this.focusNode) {
+      this.focusNode,
+      this.expandDropDownByDefault) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -350,6 +356,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   List<T> getSuggestions(List<T> suggestions, Comparator<T> sorter,
       Filter<T> filter, int maxAmount, String query) {
+
+    if (expandDropDownByDefault){
+      return suggestions;
+    }
     if (null == query || query.length < minLength) {
       return [];
     }
@@ -422,7 +432,8 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
             submitOnSuggestionTap: submitOnSuggestionTap,
             clearOnSubmit: clearOnSubmit,
             textInputAction: textInputAction,
-            textCapitalization: textCapitalization);
+            textCapitalization: textCapitalization
+  );
 
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<String>(
