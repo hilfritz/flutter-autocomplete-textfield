@@ -360,6 +360,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
 
     if (null == query || query.length < minLength) {
+      query = "";
       if (expandDropDownByDefault){
 
       }else{
