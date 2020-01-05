@@ -357,7 +357,13 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   List<T> getSuggestions(List<T> suggestions, Comparator<T> sorter,
       Filter<T> filter, int maxAmount, String query) {
 
-    if (expandDropDownByDefault){
+    bool isQueryEmpty = false;
+    if (query==null){
+      isQueryEmpty = true;
+    }else if (query.length < minLength){
+      isQueryEmpty = true;
+    }
+    if (isQueryEmpty==true && expandDropDownByDefault==true){
       return suggestions;
     }
     if (null == query || query.length < minLength) {
